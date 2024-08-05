@@ -71,19 +71,19 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className='w-[500px] flex justify-center mx-auto mt-14'>
+      <div className='flex justify-center mx-auto mt-14'>
         <Loader2 className='w-10 h-10 animate-spin text-gray-500' />
       </div>
     )
   }
 
   if (error) {
-    return <div className='w-[500px] flex justify-center mx-auto mt-14'>Error: {error || "An error occured"}</div>;
+    return <div className='flex justify-center mx-auto mt-14'>Error: {error || "An error occurred"}</div>;
   }
 
   return (
-    <div className='w-[500px] flex justify-center mx-auto mt-14'>
-      <Card className="w-[420px] h-auto">
+    <div className='flex justify-center mx-auto mt-14 px-4 sm:px-6 lg:px-8'>
+      <Card className="w-full max-w-lg h-auto">
         <CardHeader>
           <CardTitle>Currency Converter</CardTitle>
           <CardDescription>Calculate conversions between currencies</CardDescription>
