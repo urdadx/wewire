@@ -27,6 +27,7 @@ const Home = () => {
   const [amountToReceive, setAmountToReceive] = useState<string>('');
   const [amountToGive, setAmountToGive] = useState<string>('');
   const [fromCurrency, setFromCurrency] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleAmountToReceive = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmountToReceive(e.target.value);
@@ -34,8 +35,12 @@ const Home = () => {
 
   const calculateAmountToGive = () => {
     if (!selectedCurrency || !amountToReceive) {
+      setErrorMessage('Please fill in all the fields.');
+      setAmountToGive('');
       return;
     }
+
+    setErrorMessage('');
 
     // Find the selected data based on the selectedCurrency
     const selectedData = data.find((item) => item.id === selectedCurrency);
@@ -115,16 +120,17 @@ const Home = () => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-start flex-col w-full">
-          {
-            amountToGive && (
-              <div className='flex flex-row items-center justify-start gap-1 mb-4'>
-                <span className="text-md text-black">
-                  {amountToGive === 'No conversions available for this transaction' ? amountToGive : `You will have to give ${fromCurrency} `}
-                </span>
-                <span className="text-md font-semibold text-black">{amountToGive !== 'No conversions available for this transaction' && amountToGive}</span>
-              </div>
-            )
-          }
+          {errorMessage && (
+            <div className='text-red-500 mb-4'>{errorMessage}</div>
+          )}
+          {amountToGive && (
+            <div className='flex flex-row items-center justify-start gap-1 mb-4'>
+              <span className="text-md text-black">
+                {amountToGive === 'No conversions available for this transaction' ? amountToGive : `You will have to give ${fromCurrency} `}
+              </span>
+              <span className="text-md font-semibold text-black">{amountToGive !== 'No conversions available for this transaction' && amountToGive}</span>
+            </div>
+          )}
 
           <Button onClick={calculateAmountToGive} className='w-full font-semibold'>Convert</Button>
         </CardFooter>
